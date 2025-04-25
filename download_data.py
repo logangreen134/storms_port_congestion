@@ -28,10 +28,10 @@ soup = BeautifulSoup(r.text, 'html.parser')
 links = [link['href'] for link in soup.find_all('a', text=lambda x: x and 'StormEvents_details' in x)]
 
 for year in years:
-    url = f"{url}{[link for link in links if str(year) in link][0]}"
+    temp_url = f"{url}{[link for link in links if str(year) in link][0]}"
     print(f"Downloading data for {year}...")
     
-    r = requests.get(url)
+    r = requests.get(temp_url)
     
     with gzip.open(BytesIO(r.content), mode='rt') as f:
         df = pd.read_csv(f)
